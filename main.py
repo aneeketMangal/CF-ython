@@ -1,142 +1,126 @@
-from collections import defaultdict, deque, Counter
-from sys import stdin, stdout
-from heapq import heappush, heappop
-import math
-import io
-import os
-import math
-import bisect
+from imports import *
+from UiComponents import UiComponents
 
-#?############################################################
-
-
-def isPrime(x):
-    for i in range(2, x):
-        if i*i > x:
-            break
-        if (x % i == 0):
-            return False
-    return True
-
-#?############################################################
+class mainScreen(QMainWindow, UiComponents):
+    def __init__(self, App):
+        super().__init__()
+        self.App = App
+        self.cfApi = CfApi()
+        self.title = "CF-ython"
+        self.directoryPath = os.getcwd()
+        self.appIcon = os.path.join(self.directoryPath, "Images", "logo.png")
+        self.currFilePath = os.path.join(self.directoryPath, "Local", "main.py")
+        self.inputFile = os.path.join(self.directoryPath,"Local", "in.txt")
+        self.outputFile = os.path.join(self.directoryPath, "Local", "op.txt")
+        self.initWindow()
 
 
-def ncr(n, r, p):
-    num = den = 1
-    for i in range(r):
-        num = (num * (n - i)) % p
-        den = (den * (i + 1)) % p
-    return (num * pow(den, p - 2, p)) % p
+    def dialog(self, s):
+        temp = QMessageBox(self)
+        temp.setText(s)
+        temp.setIcon(QMessageBox.Information)
+        temp.show()
+
+    def fileOpen(self, path):
+        try:
+            with open(path, 'rU') as f:
+                text = f.read()
+                return text
+        except Exception as e:
+            self.warningDialog(str(e))
 
 
-#?############################################################
 
-def primeFactors(n):
-    l = []
-    while n % 2 == 0:
-        l.append(2)
-        n = n / 2
-    for i in range(3, int(math.sqrt(n))+1, 2):
-        while n % i == 0:
-            l.append(int(i))
-            n = n / i
-    if n > 2:
-        l.append(n)
-    return list(set(l))
+    def fileSave(self, filePath, obj):
+        print(filePath)
+        return self.fileSaveToPath(filePath, obj)
+  
+    def fileSaveToPath(self, path, obj):
+        text = obj.toPlainText()
+        try:
+            with open(path, 'w') as f:
+                f.write(text)
+        except Exception as e:
+            self.warningDialog(str(e))
 
 
-#?############################################################
 
-def power(x, y, p):
-    res = 1
-    x = x % p
-    if (x == 0):
-        return 0
-    while (y > 0):
-        if ((y & 1) == 1):
-            res = (res * x) % p
-        y = y >> 1
-        x = (x * x) % p
-    return res
+    def connections(self):
+        self.save_button.clicked.connect(lambda: self.fileSave())
+        self.editorScreen.setPlainText(self.fileOpen(self.currFilePath))
+        self.inputScreen.setPlainText(self.fileOpen(self.inputFile))
+        self.outputScreen.setPlainText(self.fileOpen(self.outputFile))
+        self.compile_button.clicked.connect(lambda: self.compile())
+        self.search_button.clicked.connect(lambda: self.loadCFProblems())
+        # self.editorScreen.shortcut["Save"].activated.connect(lambda:self.fileSave())
+        self.editorScreen.shortcut["Run"].activated.connect(lambda:self.compile())
+        self.problemView.itemClicked.connect(self.openCFProblem)
+        self.loadCFProblems()
 
-#?############################################################
-
-
-def sieve(n):
-    prime = [True for i in range(n+1)]
-    p = 2
-    while (p * p <= n):
-        if (prime[p] == True):
-            for i in range(p * p, n+1, p):
-                prime[i] = False
-        p += 1
-    return prime
+    def compile(self):
+        self.fileSave(self.currFilePath,self.editorScreen)
+        # print(self.currFilePath)
+        self.fileSave(self.inputFile, self.inputScreen)
+        command = "python3 "+self.currFilePath+"<"+self.inputFile+">"+self.outputFile
+        # print(command)
+        subprocesses = subprocess.run(command, shell=True, stdout=subprocess.PIPE)
+        subprocess_return = subprocesses.stdout.decode('utf8')
+        print(subprocesses.stdout)
+        self.outputScreen.setPlainText(self.fileOpen(self.outputFile))
+        self.dialog("Look for errors on terminal")
 
 
-#?############################################################
-
-def digits(n):
-    c = 0
-    while (n > 0):
-        n //= 10
-        c += 1
-    return c
-
-#?############################################################
-
-
-def ceil(n, x):
-    if (n % x == 0):
-        return n//x
-    return n//x+1
-
-#?############################################################
-
-
-def mapin():
-    return map(int, input().split())
-
-#?############################################################
-def solve(dd, n):
-    x = 0
-    for i in range(n):
-        if(dd[i] == "("):
-            x+=1
-        elif(dd[i] == ")"):
-            x-=1
-        if(x <= 0 and i!= n-1):
-            return -1
-
+    def window(self):
+        self.editor(self.currFilePath)
+        self.input(self.inputFile)
+        self.output(self.outputFile)
+        self.problemViewer()
+        self.tabbedView2()
+        self.problemTable()
     
-    if(x == 0):
-        return dd
-    else:
-        return -1
-            
 
+    def loadCFProblems(self):
+        a = self.lowRange.text()
+        b = self.upRange.text()
+        self.cfProblemSet = self.cfApi.getProblemsInRange(a, b)
+        totalProblems = len(self.cfProblemSet)
+        while (self.problemView.rowCount() > 0):
+            self.problemView.removeRow(0)
 
+        for i in range(len(self.cfProblemSet)):
+            self.problemView.insertRow(i)
+            self.problemView.setItem(i,0, QTableWidgetItem(str(self.cfProblemSet[i]['contestId'])+self.cfProblemSet[i]['index']))
+            self.problemView.setItem(i,1, QTableWidgetItem(self.cfProblemSet[i]['name']))
+            if('rating' in self.cfProblemSet[i]):
+                self.problemView.setItem(i,2, QTableWidgetItem(str(self.cfProblemSet[i]['rating'])))
 
-# input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
-# python3 15.py<in>op
-n = int(input())
-l = input()
-if(n&1):
-    print(":(")
-else:
-    a = l.count("(")
-    b = l.count(")")
-    if(a>n//2 or b>n//2):
-        print(":(")
-    else:
+    def openCFProblem(self, cell):
+        if(cell.column() == 0):
+            self.cfApi.getProblemStatement(cell.text())
 
-        a = n//2-a
-        b = n//2-b
-        l = l.replace('?', '(', a)
-        l = l.replace('?', ')')
+    def initWindow(self):
+        self.header = self.mainLabel()
+        self.window()
+        self.connections()
+        self.setWindowTitle(self.title)
         
-        ans =solve(l, n)
-        # print(ans)
-        if(ans == -1):
-            print(":(")
-        else:
-            print(l)
+        hbox = QHBoxLayout()
+        splitter1 = QSplitter(Qt.Vertical)
+        splitter1.addWidget(self.inputScreen)
+        splitter1.addWidget(self.outputScreen)
+        splitter1.setSizes([100,100])
+        splitter1.setStyleSheet("background-color: transparent")
+        splitter2 = QSplitter(Qt.Horizontal)
+        splitter2.addWidget(self.problemView)
+        splitter2.addWidget(self.tabs2)
+        splitter2.addWidget(splitter1)
+        splitter2.setSizes([250, 350,100])
+        splitter2.setStyleSheet("background-color: transparent")
+        hbox.addWidget(splitter2)
+        vbox = QVBoxLayout()
+        vbox.addLayout(self.header, 1)
+        vbox.addLayout(hbox, 20)
+        temp = QWidget()
+        temp.setLayout(vbox)
+        self.setCentralWidget(temp)
+        self.showMaximized()

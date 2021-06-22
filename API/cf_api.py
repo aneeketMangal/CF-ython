@@ -68,7 +68,7 @@ class CfApi:
 		except:
 			return self.listOfProblems
 
-	def getProblem(self, problemId):
+	def getProblemStatement(self, problemId):
 		contestID = problemId[:-1]
 		problemIndex = problemId[-1]
 		problemUrl = "https://codeforces.com/problemset/problem/"+contestID+"/"+problemIndex

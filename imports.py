@@ -9,3 +9,7 @@ from API.cf_api import CfApi
 import subprocess
 from Templates.Python.editor import CodeEditor
 from Templates.Python.highlight import PythonHighlighter
+import requests
+import json
+import random
+import webbrowser

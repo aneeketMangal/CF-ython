@@ -2,9 +2,6 @@ import requests
 import json
 import random
 import webbrowser
-
-
-
 class CfApi:
 	def __init__(self):
 		self.listOfProblems = self.getAllProblems()

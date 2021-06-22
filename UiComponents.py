@@ -1,11 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-import sys
-from Templates.Python.editor import CodeEditor
-from Templates.Python.highlight import PythonHighlighter
-from globals.variables import *
+from imports import *
 
 class UiComponents():
     def __init__(self):

@@ -40,12 +40,33 @@ class CodeEditor(QPlainTextEdit, QThread):
         "Run": QShortcut(QKeySequence('Ctrl+Shift+B'), self),
         "Tab": QShortcut(QKeySequence('Ctrl+T'), self),
         "Copy": QShortcut(QKeySequence('Ctrl+Shift+P'), self),
-        "Enter": QShortcut(QKeySequence('Alt+Up'), self)
+        "Enter": QShortcut(QKeySequence('Alt+Up'), self),
+        "Comment": QShortcut(QKeySequence('ctrl+/'), self)
          }
         self.shortcut["Copy"].activated.connect(self.copyGivenLine)
+        self.shortcut["Comment"].activated.connect(self.comment)
         # self.shortcut["Enter"].activated.connect(self.shiftLineUp)
         # self.returnPressed.activated.connect(self.checkTabSetting)
 
+
+
+    def comment(self):
+        c = self.textCursor().block()
+        c = c.text()
+        if(c.strip()[0] == "#"):
+            print("fdsa")
+            cur = self.textCursor()
+            cur.movePosition(QTextCursor.StartOfLine, QTextCursor.MoveAnchor)   
+            temp = list(c).index('#')
+            for i in range(temp):
+                cur.deleteChar()
+        else:
+            cur = self.textCursor()
+            cur.movePosition(QTextCursor.StartOfLine, QTextCursor.MoveAnchor)
+            cur.insertText('# ')
+
+        # self.setTextCursor(cur)
+        
 
 
     def copyGivenLine(self):
@@ -55,8 +76,6 @@ class CodeEditor(QPlainTextEdit, QThread):
         cur.movePosition(QTextCursor.EndOfLine, QTextCursor.MoveAnchor)
         self.setTextCursor(cur)
         cur.insertText('\n')
-
-
         cur.insertText(c)
 
     def shiftLineUp(self):

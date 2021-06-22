@@ -1,3 +1,11 @@
+from collections import defaultdict, deque, Counter
+from sys import stdin, stdout
+from heapq import heappush, heappop
+import math
+import io
+import os
+import math
+import bisect
 
 #?############################################################
 
@@ -89,46 +97,8 @@ def mapin():
     return map(int, input().split())
 
 #?############################################################
-def solve(dd, n):
-    x = 0
-    for i in range(n):
-        if(dd[i] == "("):
-            x+=1
-        elif(dd[i] == ")"):
-            x-=1
-        if(x <= 0 and i!= n-1):
-            return -1
-
-    
-    if(x == 0):
-        return dd
-    else:
-        return -1
-            
 
 
-
-input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
-# python3 15.py<in>op
-n = int(input())
-l = input()
-if(n&1):
-    print(":(")
-else:
-    a = l.count("(")
-    b = l.count(")")
-    if(a>n//2 or b>n//2):
-        print(":(")
-    else:
-
-        a = n//2-a
-        b = n//2-b
-        l = l.replace('?', '(', a)
-        l = l.replace('?', ')')
-        
-        ans =solve(l, n)
-        # print(ans)
-        if(ans == -1):
-            print(":(")
-        else:
-            print(l)
+# input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
+for i in range(10):
+	print(12)

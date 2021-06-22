@@ -2,23 +2,20 @@ import requests
 import json
 import random
 
-print(listOfContests['result'][0])
 
-
-class API:
-
+class CfApi:
 	def __init__(self):
-		self.listOfContests = self.getAllContests()
 		self.listOfProblems = self.getAllProblems()
 
-	def getAllProblems(self, id):
+	def getAllProblems(self):
 
 		listOfProblems = requests.get("https://codeforces.com/api/problemset.problems")
 		listOfProblems = listOfProblems.json()
 		if(listOfProblems['status']== "OK"):
-			listOfProblems = listOfProblems["result"]
+			listOfProblems = listOfProblems["result"]["problems"]
 		else:
 			listOfProblems = []
+		# print(listOfProblems)
 		return listOfProblems
 	def getAllContests(self):
 		listOfContests = requests.get("https://codeforces.com/api/contest.list")
@@ -46,7 +43,28 @@ class API:
 		return random.choice(problemset)
 
 
-		pass
+	def getProblemsInRange(self, low, high):
+		
+		try:
+			low = int(low)
+			high = int(high)
+			print(low, high)
+			out = []
+			
+			if(low<=high):
+				for i in self.listOfProblems:
+					if 'rating' in i:
+						if(i['rating']<=high and i['rating']>=low):
+							out.append(i)
+
+				return out
+			return self.listOfProblems
+
+
+
+
+		except:
+			return self.listOfProblems
 
 	def getProblem(self, contestID, index):
 		for i in self.listOfProblems:

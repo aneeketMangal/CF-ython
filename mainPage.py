@@ -8,12 +8,14 @@ from qdarkstyle.dark.palette import DarkPalette
 import os
 import subprocess
 from UiComponents import UiComponents
-
+from API.cf_api import CfApi
+from globals.variables import *
 
 class mainScreen(QMainWindow, UiComponents):
     def __init__(self, App):
         super().__init__()
         self.App = App
+        self.cfApi = CfApi()
         self.title = "Text"
         self.directoryPath = os.getcwd()
         self.currFilePath = os.path.join(self.directoryPath, "main.py")
@@ -31,20 +33,6 @@ class mainScreen(QMainWindow, UiComponents):
         dlg.setText(s)
         dlg.setIcon(QMessageBox.Critical)
         dlg.show()
-  
-    # def fileOpen(self):
-    #     path, _ = QFileDialog.getOpenFileName(self, "Open file", "", 
-    #                          "Text documents (*.txt);All files (*.*)")
-
-    #     if path:
-    #         try:
-    #             with open(path, 'rU') as f:
-    #                 text = f.read()
-    #         except Exception as e:
-    #             self.warningDialog(str(e))
-    #         else:
-    #             self.currFilePath = path
-    #             self.editor.setPlainText(text)
 
     def fileOpen(self, path):
         try:
@@ -104,8 +92,11 @@ class mainScreen(QMainWindow, UiComponents):
         # self.inputScreen.setPlainText(self.fileOpen(self.currFilePath1))
         self.outputScreen.setPlainText(self.fileOpen(self.currFilePath2))
         self.compile_button.clicked.connect(lambda: self.compile())
+        self.search_button.clicked.connect(lambda: self.loadCFProblems())
         self.editorScreen.shortcut["Save"].activated.connect(lambda:self.fileSave())
         self.editorScreen.shortcut["Run"].activated.connect(lambda:self.compile())
+        self.problemView.itemClicked.connect(self.openCFProblem)
+        self.loadCFProblems()
         # self.editorScreen.focus_out.connect(lambda:self.check_input(Dialog14))
         # self.theme_button.sclicked.connect(lambda: self.changeTheme())
 
@@ -124,13 +115,34 @@ class mainScreen(QMainWindow, UiComponents):
         self.input(self.currFilePath1)
         self.output(self.currFilePath2)
         self.createMenuBar()
-        self.problemTable()
+        self.problemTable(MAX_PROBLEMS_TO_DISPLAY)
         # self.tabbedView1()
         # self.tabbedView2()
         # self.help = self.tabs1
         # self.feed = self.tabs2
 
-    
+    def loadCFProblems(self):
+        a = self.lowRange.text()
+        b = self.upRange.text()
+        self.cfProblemSet = self.cfApi.getProblemsInRange(a, b)
+        totalProblems = len(self.cfProblemSet)
+        print(self.cfProblemSet[0])
+        while (self.problemView.rowCount() > 0):
+            self.problemView.removeRow(0)
+
+        for i in range(len(self.cfProblemSet)):
+            self.problemView.insertRow(i)
+            self.problemView.setItem(i,0, QTableWidgetItem(str(self.cfProblemSet[i]['contestId'])+self.cfProblemSet[i]['index']))
+            self.problemView.setItem(i,1, QTableWidgetItem(self.cfProblemSet[i]['name']))
+            if('rating' in self.cfProblemSet[i]):
+                self.problemView.setItem(i,2, QTableWidgetItem(str(self.cfProblemSet[i]['rating'])))
+            # print(self.cfProblesmSet[i])
+        pass
+
+    def openCFProblem(self, cell):
+        if(cell.column() == 0):
+            print(cell.row(), cell.column(), cell.text())
+
 
 
     def initWindow(self):
@@ -149,9 +161,10 @@ class mainScreen(QMainWindow, UiComponents):
         splitter1.setSizes([100,100])
         splitter1.setStyleSheet("background-color: transparent")
         splitter2 = QSplitter(Qt.Horizontal)
+        splitter2.addWidget(self.problemView)
         splitter2.addWidget(self.editorScreen)
         splitter2.addWidget(splitter1)
-        splitter2.setSizes([300,100])
+        splitter2.setSizes([250, 400,100])
         splitter2.setStyleSheet("background-color: transparent")
 
         hbox.addWidget(splitter2)

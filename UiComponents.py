@@ -9,6 +9,7 @@ import os
 import qtawesome as qta
 from Templates.Python.editor import CodeEditor
 import syntax
+
 class UiComponents():
     def __init__(self):
         font1 = QFontDatabase.applicationFontFamilies(0)[0]
@@ -179,10 +180,10 @@ class UiComponents():
 
     def developerInfo(self):
         self.about = QMessageBox()
-        self.about.setTitle("about RISC-V simulator")
-        self.about.setText("assembly to machine code\n conversion of RISC-V ISA\n\npython simulation of\nmachine level execution of\nRISC-V 32 bit instructions.\n"+
-                           "This project is developed by\nAneeket\nShikhar\nTanmay\nHet\nAditya\nSource code can be found at\nhttps://github.com/tanmayaeron/RISC-V_Simulator")
         self.about.exec_()
+
+    def problemTable():
+        self.problemView = QTableView()
         
         
     def createMenuBar(self):
@@ -192,6 +193,8 @@ class UiComponents():
         self.menuBar.addMenu(fileMenu)
         editMenu = self.menuBar.addMenu("&Edit")
         helpMenu = self.menuBar.addMenu("&Help")
+
+
         
 
     def editor(self, filePath):
@@ -204,8 +207,15 @@ class UiComponents():
 
     def input(self, filePath):
         self.inputScreen = QPlainTextEdit()
+        # self.inputScreen.load(QtCore.QUrl().fromLocalFile("in"))
         self.inputScreen.setStyleSheet("background-color: '#282A36'")
         self.inputScreen.setFont(self.fixedfont)
+        # f = QFile("in")
+        # f.open(QFile.ReadOnly|QFile.Text)
+        # istream = QTextStream(f)
+        # self.inputScreen.setHtml(istream.readAll())
+        # f.close()
+        # self.inputScreen.setHtml("in")
         self.path = filePath
         self.inputScreen.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.inputScreen.setFrameStyle(QFrame.NoFrame)

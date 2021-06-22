@@ -101,7 +101,7 @@ class mainScreen(QMainWindow, UiComponents):
     def connections(self):
         self.save_button.clicked.connect(lambda: self.fileSave())
         self.editorScreen.setPlainText(self.fileOpen(self.currFilePath))
-        self.inputScreen.setPlainText(self.fileOpen(self.currFilePath1))
+        # self.inputScreen.setPlainText(self.fileOpen(self.currFilePath1))
         self.outputScreen.setPlainText(self.fileOpen(self.currFilePath2))
         self.compile_button.clicked.connect(lambda: self.compile())
         self.editorScreen.shortcut["Save"].activated.connect(lambda:self.fileSave())
@@ -113,6 +113,7 @@ class mainScreen(QMainWindow, UiComponents):
     def compile(self):
         self.fileSave(self.currFilePath,self.editorScreen)
         self.fileSave(self.currFilePath1, self.inputScreen)
+
         subprocesses = subprocess.Popen("python3 main.py<in>op", shell=True, stdout=subprocess.PIPE)
         subprocess_return = subprocesses.stdout.read()
         self.outputScreen.setPlainText(self.fileOpen(self.currFilePath2))
@@ -123,10 +124,14 @@ class mainScreen(QMainWindow, UiComponents):
         self.input(self.currFilePath1)
         self.output(self.currFilePath2)
         self.createMenuBar()
+        self.problemTable()
         # self.tabbedView1()
         # self.tabbedView2()
         # self.help = self.tabs1
         # self.feed = self.tabs2
+
+    
+
 
     def initWindow(self):
         # self.splash.close()
@@ -146,7 +151,7 @@ class mainScreen(QMainWindow, UiComponents):
         splitter2 = QSplitter(Qt.Horizontal)
         splitter2.addWidget(self.editorScreen)
         splitter2.addWidget(splitter1)
-        splitter2.setSizes([700,100])
+        splitter2.setSizes([300,100])
         splitter2.setStyleSheet("background-color: transparent")
 
         hbox.addWidget(splitter2)

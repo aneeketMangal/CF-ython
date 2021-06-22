@@ -1,6 +1,8 @@
 import requests
 import json
 import random
+import webbrowser
+
 
 
 class CfApi:
@@ -66,10 +68,12 @@ class CfApi:
 		except:
 			return self.listOfProblems
 
-	def getProblem(self, contestID, index):
-		for i in self.listOfProblems:
-			if(i['contestID'] == contestID and i['index'] == index):
-				return i
+	def getProblem(self, problemId):
+		contestID = problemId[:-1]
+		problemIndex = problemId[-1]
+		problemUrl = "https://codeforces.com/problemset/problem/"+contestID+"/"+problemIndex
+		webbrowser.open(problemUrl)
+		return
 
 
 

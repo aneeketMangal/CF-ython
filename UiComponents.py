@@ -118,13 +118,6 @@ class UiComponents():
         main_label_hBox.addWidget(self.save_button)
         main_label_hBox.addSpacing(40)
         return main_label_hBox
-    
-
-
-
-    def developerInfo(self):
-        self.about = QMessageBox()
-        self.about.exec_()
 
     def problemTable(self, totalProblems):
        
@@ -147,23 +140,21 @@ class UiComponents():
         #     self.navButtonsList.append(temp)
 
         # self.hbox.addWidget(self.navButtons)
-
-
-     
         
-    def createMenuBar(self):
-        self.menuBar =  QMenuBar(self)
+    # def createMenuBar(self):
+    #     self.menuBar =  QMenuBar(self)
         
-        fileMenu = QMenu("&File", self)
-        self.menuBar.addMenu(fileMenu)
-        editMenu = self.menuBar.addMenu("&Edit")
-        helpMenu = self.menuBar.addMenu("&Help")
+    #     fileMenu = QMenu("&File", self)
+    #     self.menuBar.addMenu(fileMenu)
+    #     editMenu = self.menuBar.addMenu("&Edit")
+    #     helpMenu = self.menuBar.addMenu("&Help")
 
 
-        
-
+    def problemViewer(self):
+        self.problemWidget = CodeEditor()
     def editor(self, filePath):
         self.editorScreen = CodeEditor()
+
         self.editorScreen.setStyleSheet("background-color: '#282A36'")
         self.editorScreen.setFont(self.fixedfont2)
         self.path = filePath
@@ -172,15 +163,8 @@ class UiComponents():
 
     def input(self, filePath):
         self.inputScreen = QPlainTextEdit()
-        # self.inputScreen.load(QtCore.QUrl().fromLocalFile("in"))
         self.inputScreen.setStyleSheet("background-color: '#282A36'")
         self.inputScreen.setFont(self.fixedfont)
-        # f = QFile("in")
-        # f.open(QFile.ReadOnly|QFile.Text)
-        # istream = QTextStream(f)
-        # self.inputScreen.setHtml(istream.readAll())
-        # f.close()
-        # self.inputScreen.setHtml("in")
         self.path = filePath
         self.inputScreen.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.inputScreen.setFrameStyle(QFrame.NoFrame)
@@ -192,30 +176,11 @@ class UiComponents():
         self.path = filePath
         self.outputScreen.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.outputScreen.setFrameStyle(QFrame.NoFrame)
-        
-   
-    def tabbedView1(self):
-        self.tabs1 = QTabWidget()
-        self.tabs1.setTabPosition(QtWidgets.QTabWidget.West)
-        self.tabs1.setIconSize(QtCore.QSize(60, 60))
-        self.tabs1.setStyleSheet("border:none")
-        self.tab1 = self.scroll1
-        self.tab2 = self.scroll
-        self.tab3 = self.infoScroll
-        self.tab4 = self.controlScroll
-        self.tab5 = self.scroll5
-        self.tab6 = self.table1
-        self.tab7 = self.table2
-        self.tab8 = self.statsScroll
-        
-        self.tabs1.addTab(self.tab4, QIcon("GUI/Images/controls.png"), "")
-        self.tabs1.addTab(self.tab1, QIcon("GUI/Images/registers.png"), "")
-        self.tabs1.addTab(self.tab2, QIcon("GUI/Images/memory.png"), "")
-        self.tabs1.addTab(self.tab8, QIcon("GUI/Images/stats.png"), "")
-        self.tabs1.addTab(self.tab3, QIcon("GUI/Images/cache.png"), "")
- 
+    
     def tabbedView2(self):
         self.tabs2 = QTabWidget()
         self.tabs2.setStyleSheet("border:none")
-        self.tabMain2 = self.editorScroll
-        self.tabs2.addTab(self.tabMain2, "Code")
+        self.tabMain1 = self.editorScreen
+        self.tabs2.addTab(self.tabMain1, "Code")
+        self.tabMain2 = self.problemWidget
+        self.tabs2.addTab(self.tabMain2, "Statement")

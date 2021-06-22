@@ -114,7 +114,9 @@ class mainScreen(QMainWindow, UiComponents):
         self.editor(self.currFilePath)
         self.input(self.currFilePath1)
         self.output(self.currFilePath2)
-        self.createMenuBar()
+        self.problemViewer()
+        self.tabbedView2()
+        # self.createMenuBar()
         self.problemTable(MAX_PROBLEMS_TO_DISPLAY)
         # self.tabbedView1()
         # self.tabbedView2()
@@ -126,7 +128,6 @@ class mainScreen(QMainWindow, UiComponents):
         b = self.upRange.text()
         self.cfProblemSet = self.cfApi.getProblemsInRange(a, b)
         totalProblems = len(self.cfProblemSet)
-        print(self.cfProblemSet[0])
         while (self.problemView.rowCount() > 0):
             self.problemView.removeRow(0)
 
@@ -141,7 +142,8 @@ class mainScreen(QMainWindow, UiComponents):
 
     def openCFProblem(self, cell):
         if(cell.column() == 0):
-            print(cell.row(), cell.column(), cell.text())
+            self.cfApi.getProblemStatement(cell.text())
+            # print(cell.row(), cell.column(), cell.text())
 
 
 
@@ -153,7 +155,7 @@ class mainScreen(QMainWindow, UiComponents):
         self.window()
         self.connections()
 
-        self.setMenuBar(self.menuBar)
+        # self.setMenuBar(self.menuBar)
         hbox = QHBoxLayout()
         splitter1 = QSplitter(Qt.Vertical)
         splitter1.addWidget(self.inputScreen)
@@ -162,9 +164,9 @@ class mainScreen(QMainWindow, UiComponents):
         splitter1.setStyleSheet("background-color: transparent")
         splitter2 = QSplitter(Qt.Horizontal)
         splitter2.addWidget(self.problemView)
-        splitter2.addWidget(self.editorScreen)
+        splitter2.addWidget(self.tabs2)
         splitter2.addWidget(splitter1)
-        splitter2.setSizes([250, 400,100])
+        splitter2.setSizes([250, 350,100])
         splitter2.setStyleSheet("background-color: transparent")
 
         hbox.addWidget(splitter2)

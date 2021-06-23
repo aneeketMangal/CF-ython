@@ -15,9 +15,9 @@
 
 
         
-    def fileSaveAs(self):
-        path, _ = QFileDialog.getSaveFileName(self, "Save file", "", 
-                             "Text documents (*.txt);All files (*.*)")
-        if not path:
-            return
-        self.fileSaveToPath(path)
+    # def fileSaveAs(self):
+    #     path, _ = QFileDialog.getSaveFileName(self, "Save file", "", 
+    #                          "Text documents (*.txt);All files (*.*)")
+    #     if not path:
+    #         return
+    #     self.fileSaveToPath(path)

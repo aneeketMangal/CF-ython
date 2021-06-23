@@ -3,22 +3,16 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject, Qt, QSize, QRect
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import sys
-import qdarkstyle
-from qdarkstyle.dark.palette import DarkPalette
 import os
-import numpy as np
+# import numpy as np
 
 class LineNumberArea(QWidget):
-
-
     def __init__(self, editor):
         super().__init__(editor)
         self.myeditor = editor
 
-
     def sizeHint(self):
         return QSize(int(self.editor.lineNumberAreaWidth()), 0)
-
 
     def paintEvent(self, event):
         self.myeditor.lineNumberAreaPaintEvent(event)
@@ -174,12 +168,6 @@ class CodeEditor(QPlainTextEdit, QThread):
             self.updateLineNumberAreaWidth(0)
 
 
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-
-        cr = self.contentsRect();
-        self.lineNumberArea.setGeometry(QRect(cr.left(), cr.top(),
-                    self.lineNumberAreaWidth(), cr.height()))
 
     def lineNumberAreaPaintEvent(self, event):
         mypainter = QPainter(self.lineNumberArea)
@@ -200,6 +188,14 @@ class CodeEditor(QPlainTextEdit, QThread):
             top = bottom
             bottom = top + self.blockBoundingRect(block).height()
             blockNumber += 1
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+
+        cr = self.contentsRect();
+        self.lineNumberArea.setGeometry(QRect(cr.left(), cr.top(),
+                    self.lineNumberAreaWidth(), cr.height()))
+
 
 
     def highlightCurrentLine(self):

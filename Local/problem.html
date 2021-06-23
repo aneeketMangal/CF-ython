@@ -1,18 +1,17 @@
-<html><head><title>test</title></head><body><h1><b><center><div class="title">F. Figure Fixing</div></center></b></h1><center><div>Time: 2 seconds</div></center><center><div>Memory: 256 megabytes</div></center><hr><hr><h3>Statement</h3><div>You have a connected undirected graph made of <b>n</b> nodes and <b>m</b> edges. The <b>i</b>-th node has a value <b>v_i</b> and a target value <b>t_i</b>.In an operation, you can choose an edge <b>(i, j)</b> and add <b>k</b> to both <b>v_i</b> and <b>v_j</b>, where <b>k</b> can be any integer. In particular, <b>k</b> can be negative.Your task to determine if it is possible that by doing some finite number of operations (possibly zero), you can achieve for every node <b>i</b>, <b>v_i = t_i</b>.</div><h3>Input Specification</h3><div>The first line contains a single integer <b>t</b> (<b>1 <= t <= 1000</b>), the number of test cases. Then the test cases follow.</div><h3>Output Specification</h3><div>For each test case, if it is possible for every node to reach its target after some number of operations, print "YES". Otherwise, print "NO".</div><div><h3>Input</h3></div><div><pre>2
-4 4
-5 1 2 -3
-3 3 10 1
-1 2
-1 4
-3 2
-3 4
-4 4
-5 8 6 6
--3 1 15 4
-1 2
-1 4
-3 2
-3 4
-</pre></div><div><h3>Output</h3></div><div><pre>YES
-NO
+<html><head><title>test</title></head><body><h1><b><center><div class="title">C. Diluc and Kaeya</div></center></b></h1><center><div>Time: 2 seconds</div></center><center><div>Memory: 256 megabytes</div></center><hr><hr><h3>Statement</h3><div>The tycoon of a winery empire in Mondstadt, unmatched in every possible way. A thinker in the Knights of Favonius with an exotic appearance.This time, the brothers are dealing with a strange piece of wood marked with their names. This plank of wood can be represented as a string of <b>n</b> characters. Each character is either a 'D' or a 'K'. You want to make some number of cuts (possibly <b>0</b>) on this string, partitioning it into several contiguous pieces, each with length at least <b>1</b>. Both brothers act with dignity, so they want to split the wood as evenly as possible. They want to know the maximum number of pieces you can split the wood into such that the ratios of the number of occurrences of 'D' to the number of occurrences of 'K' in each chunk are the same.Kaeya, the curious thinker, is interested in the solution for multiple scenarios. He wants to know the answer for every prefix of the given string. Help him to solve this problem!For a string we define a ratio as <b>a:b</b> where 'D' appears in it <b>a</b> times, and 'K' appears <b>b</b> times. Note that <b>a</b> or <b>b</b> can equal <b>0</b>, but not both. Ratios <b>a:b</b> and <b>c:d</b> are considered equal if and only if <b>a\cdot d = b\cdot c</b>. For example, for the string 'DDD' the ratio will be <b>3:0</b>, for 'DKD' — <b>2:1</b>, for 'DKK' — <b>1:2</b>, and for 'KKKKDD' — <b>2:4</b>. Note that the ratios of the latter two strings are equal to each other, but they are not equal to the ratios of the first two strings.</div><h3>Input Specification</h3><div>Each test contains multiple test cases. The first line contains the number of test cases <b>t</b> (<b>1 <= t <= 1000</b>). Description of the test cases follows.</div><h3>Output Specification</h3><div>For each test case, output <b>n</b> space separated integers. The <b>i</b>-th of these numbers should equal the answer for the prefix <b>s_{1},s_{2},\dots,s_{i}</b>.</div><div><h3>Input</h3></div><div><pre>5
+3
+DDK
+6
+DDDDDD
+4
+DKDK
+1
+D
+9
+DKDKDDDDK
+</pre></div><div><h3>Output</h3></div><div><pre>1 2 1 
+1 2 3 4 5 6 
+1 1 1 2 
+1 
+1 1 1 2 1 2 1 1 3 
 </pre></div></body></html>

@@ -100,5 +100,5 @@ def mapin():
 
 
 # input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
-for i in range(10):
-	print(120)
+for i in range(1):
+	print("getting better each day!!!:)")

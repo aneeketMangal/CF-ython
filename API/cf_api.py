@@ -1,10 +1,4 @@
-import requests
-import json
-import random
-import webbrowser
-import re
-from bs4 import BeautifulSoup
-
+from imports import *
 class CfApi:
 	def __init__(self):
 		self.listOfProblems = self.getAllProblems()
@@ -151,8 +145,8 @@ class CfApi:
 			else:
 				continue
 
-		with open('person.json', 'w') as json_file:
-		    json.dump(problem, json_file)
+		# with open('person.json', 'w') as json_file:
+		#     json.dump(problem, json_file)
     			
 		return problem
 

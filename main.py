@@ -1,6 +1,6 @@
-from imports import *
 from UiComponents import UiComponents
-
+from API.cf_api import CfApi
+from imports import *
 class mainScreen(QMainWindow, UiComponents):
     def __init__(self, App):
         super().__init__()
@@ -47,11 +47,11 @@ class mainScreen(QMainWindow, UiComponents):
 
 
     def connections(self):
-        self.save_button.clicked.connect(lambda: self.fileSave())
+        # self.save_button.clicked.connect(lambda: self.fileSave())
         self.editorScreen.setPlainText(self.fileOpen(self.currFilePath))
         self.inputScreen.setPlainText(self.fileOpen(self.inputFile))
         self.outputScreen.setPlainText(self.fileOpen(self.outputFile))
-        self.compile_button.clicked.connect(lambda: self.compile())
+        # self.compile_button.clicked.connect(lambda: self.compile())
         self.search_button.clicked.connect(lambda: self.loadCFProblems())
         # self.editorScreen.shortcut["Save"].activated.connect(lambda:self.fileSave())
         self.editorScreen.shortcut["Run"].activated.connect(lambda:self.compile())
@@ -129,7 +129,7 @@ class mainScreen(QMainWindow, UiComponents):
         hbox.addWidget(splitter2)
         vbox = QVBoxLayout()
         vbox.addLayout(self.header, 1)
-        vbox.addLayout(hbox, 20)
+        vbox.addLayout(hbox, 1)
         temp = QWidget()
         temp.setLayout(vbox)
         self.setCentralWidget(temp)

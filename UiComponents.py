@@ -1,5 +1,4 @@
 from imports import *
-
 class UiComponents():
     def __init__(self):
         font1 = QFontDatabase.applicationFontFamilies(0)[0]
@@ -44,8 +43,6 @@ class UiComponents():
         logo = QLabel()
         logoPixmap = QPixmap("Images/logo.png")
         logoPixmap = logoPixmap.scaled(300, 50)
-        self.save_button = self.buttonTile("\U0001F4BE", 50, 40)
-        self.compile_button = self.buttonTile("\U00002699", 50, 40)
         self.lowRange = self.lineEditTile()
         self.upRange = self.lineEditTile()
         self.search_button = self.buttonTile("\U0001F50D", 50, 40)
@@ -55,8 +52,6 @@ class UiComponents():
         hbox2.addWidget(self.lowRange)
         hbox2.addWidget(self.upRange)
         hbox2.addWidget(self.search_button)
-        hbox2.addWidget(self.compile_button)
-        hbox2.addWidget(self.save_button)
         hbox2.addSpacing(40)
         return hbox2
 

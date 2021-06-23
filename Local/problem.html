@@ -1,17 +1,5 @@
-<html><head><title>test</title></head><body><h1><b><center><div class="title">C. Diluc and Kaeya</div></center></b></h1><center><div>Time: 2 seconds</div></center><center><div>Memory: 256 megabytes</div></center><hr><hr><h3>Statement</h3><div>The tycoon of a winery empire in Mondstadt, unmatched in every possible way. A thinker in the Knights of Favonius with an exotic appearance.This time, the brothers are dealing with a strange piece of wood marked with their names. This plank of wood can be represented as a string of <b>n</b> characters. Each character is either a 'D' or a 'K'. You want to make some number of cuts (possibly <b>0</b>) on this string, partitioning it into several contiguous pieces, each with length at least <b>1</b>. Both brothers act with dignity, so they want to split the wood as evenly as possible. They want to know the maximum number of pieces you can split the wood into such that the ratios of the number of occurrences of 'D' to the number of occurrences of 'K' in each chunk are the same.Kaeya, the curious thinker, is interested in the solution for multiple scenarios. He wants to know the answer for every prefix of the given string. Help him to solve this problem!For a string we define a ratio as <b>a:b</b> where 'D' appears in it <b>a</b> times, and 'K' appears <b>b</b> times. Note that <b>a</b> or <b>b</b> can equal <b>0</b>, but not both. Ratios <b>a:b</b> and <b>c:d</b> are considered equal if and only if <b>a\cdot d = b\cdot c</b>. For example, for the string 'DDD' the ratio will be <b>3:0</b>, for 'DKD' — <b>2:1</b>, for 'DKK' — <b>1:2</b>, and for 'KKKKDD' — <b>2:4</b>. Note that the ratios of the latter two strings are equal to each other, but they are not equal to the ratios of the first two strings.</div><h3>Input Specification</h3><div>Each test contains multiple test cases. The first line contains the number of test cases <b>t</b> (<b>1 <= t <= 1000</b>). Description of the test cases follows.</div><h3>Output Specification</h3><div>For each test case, output <b>n</b> space separated integers. The <b>i</b>-th of these numbers should equal the answer for the prefix <b>s_{1},s_{2},\dots,s_{i}</b>.</div><div><h3>Input</h3></div><div><pre>5
-3
-DDK
-6
-DDDDDD
-4
-DKDK
-1
-D
-9
-DKDKDDDDK
-</pre></div><div><h3>Output</h3></div><div><pre>1 2 1 
-1 2 3 4 5 6 
-1 1 1 2 
-1 
-1 1 1 2 1 2 1 1 3 
-</pre></div></body></html>
+<html><head><title>test</title></head><body><h1><b><center><div class="title">B. Kavi on Pairing Duty</div></center></b></h1><center><div>Time: 1 second</div></center><center><div>Memory: 256 megabytes</div></center><hr><hr><h3>Statement</h3><div>Kavi has <b>2n</b> points lying on the <b>OX</b> axis, <b>i</b>-th of which is located at <b>x = i</b>.Kavi considers all ways to split these <b>2n</b> points into <b>n</b> pairs. Among those, he is interested in good pairings, which are defined as follows:Consider <b>n</b> segments with ends at the points in correspondent pairs. The pairing is called good, if for every <b>2</b> different segments <b>A</b> and <b>B</b> among those, at least one of the following holds:  One of the segments <b>A</b> and <b>B</b> lies completely inside the other.  <b>A</b> and <b>B</b> have the same length. Consider the following example:  <b>A</b> is a good pairing since the red segment lies completely inside the blue segment.<b>B</b> is a good pairing since the red and the blue segment have the same length.<b>C</b> is not a good pairing since none of the red or blue segments lies inside the other, neither do they have the same size.Kavi is interested in the number of good pairings, so he wants you to find it for him. As the result can be large, find this number modulo <b>998244353</b>.Two pairings are called different, if some two points are in one pair in some pairing and in different pairs in another.</div><h3>Input Specification</h3><div>The single line of the input contains a single integer <b>n</b> <b>(1<= n <= 10^6)</b>.</div><h3>Output Specification</h3><div>Print the number of good pairings modulo <b>998244353</b>.</div><div><h3>Input</h3></div><div><pre>1
+</pre></div><div><h3>Output</h3></div><div><pre>1</pre></div><div><h3>Input</h3></div><div><pre>2
+</pre></div><div><h3>Output</h3></div><div><pre>3</pre></div><div><h3>Input</h3></div><div><pre>3
+</pre></div><div><h3>Output</h3></div><div><pre>6</pre></div><div><h3>Input</h3></div><div><pre>100
+</pre></div><div><h3>Output</h3></div><div><pre>688750769</pre></div></body></html>

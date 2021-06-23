@@ -203,8 +203,6 @@ class CodeEditor(QPlainTextEdit, QThread):
 
         if not self.isReadOnly():
             selection = QTextEdit.ExtraSelection()
-            # lineColor = QColor("yellow").lighter()
-            # selection.format.setBackground(lineColor)
             selection.format.setProperty(QTextFormat.FullWidthSelection, True)
             selection.cursor = self.textCursor()
             selection.cursor.clearSelection()

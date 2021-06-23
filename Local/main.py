@@ -101,4 +101,4 @@ def mapin():
 
 # input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
 for i in range(10):
-	print(12)
+	print(120)

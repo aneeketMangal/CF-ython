@@ -71,7 +71,8 @@ class UiComponents():
 
 
     def problemViewer(self):
-        self.problemWidget = CodeEditor()
+        self.problemWidget = QTextEdit()
+
     def editor(self, filePath):
         self.editorScreen = CodeEditor()
         self.editorScreen.setStyleSheet("background-color: '#282A36'")

@@ -12,6 +12,7 @@ class mainScreen(QMainWindow, UiComponents):
         self.currFilePath = os.path.join(self.directoryPath, "Local", "main.py")
         self.inputFile = os.path.join(self.directoryPath,"Local", "in.txt")
         self.outputFile = os.path.join(self.directoryPath, "Local", "op.txt")
+        self.problemFile= os.path.join(self.directoryPath, "Local", "problem.html")
         self.initWindow()
 
 
@@ -27,7 +28,7 @@ class mainScreen(QMainWindow, UiComponents):
                 text = f.read()
                 return text
         except Exception as e:
-            self.warningDialog(str(e))
+            self.dialog(str(e))
 
 
 
@@ -55,6 +56,7 @@ class mainScreen(QMainWindow, UiComponents):
         # self.editorScreen.shortcut["Save"].activated.connect(lambda:self.fileSave())
         self.editorScreen.shortcut["Run"].activated.connect(lambda:self.compile())
         self.problemView.itemClicked.connect(self.openCFProblem)
+        self.problemView.itemDoubleClicked.connect(self.openSubmitWindow)
         self.loadCFProblems()
 
     def compile(self):
@@ -97,6 +99,14 @@ class mainScreen(QMainWindow, UiComponents):
     def openCFProblem(self, cell):
         if(cell.column() == 0):
             self.cfApi.getProblemStatement(cell.text())
+        
+            self.problemWidget.setHtml(self.fileOpen(self.problemFile))
+
+
+    def openSubmitWindow(self, cell):
+        if(cell.column() == 0):
+            self.cfApi.submit(cell.text())
+            # self.problemWidget.setHtml(self.fileOpen(self.problemFile))
 
     def initWindow(self):
         self.header = self.mainLabel()

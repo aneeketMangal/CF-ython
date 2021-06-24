@@ -70,8 +70,10 @@ class CodeEditor(QPlainTextEdit, QThread):
         d.setPosition(start,  QTextCursor.MoveAnchor)
         while(g>=0):
             c = d.block().text()
-            if(len(c) == 0):
-                break
+            if(len(c.strip()) == 0):
+                g-=1
+                d.movePosition(QTextCursor.NextBlock, QTextCursor.KeepAnchor)   
+                continue
             if(c.strip()[0] == "#"):
                 temp = c.find("#")
                 temp+=1

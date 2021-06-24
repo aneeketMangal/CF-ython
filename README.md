@@ -23,7 +23,7 @@
 </a>
 </p>
 
-It is codeforces practice tool that integrates a dedicated python text editor with codeforces environment. This way you can see the problem statement while editing your code. The editor comes with features like auto indent, commenting, syntax highlighting and features like copying the selected line. 
+It is codeforces practice tool that integrates a dedicated python text editor with codeforces environment. This way you can see the problem statement while editing your code. The editor comes with features like auto indent, commenting, syntax highlighting and other features like copying the selected line.
 
 ### Screen Shots
 <p align = "center">
@@ -68,6 +68,16 @@ It is codeforces practice tool that integrates a dedicated python text editor wi
     ```sh
     pip3 install -r requiremts.txt
     ```
+### Instructions and walkthrough
+* The application window is divided into three panes
+  * **Problem selector:** Displays the list of codeforces problems based on selected filters.
+  * **Editor/Problem Viewer:** Contains the editor and displays problem statement.
+  * **Input/Output:** YOu may enter input test case in first pane and once you run the code output will be visible in output pane.
+* Commands
+  * ```Ctrl+Shift+B```: To run the code.
+  * ```Ctrl+\```: To comment/uncomment selected code.
+  * ```Ctrl+S```: To save the code.
+  * ```Ctrl+Shift+P```: To copy selected line down.
 
 ## Contributing
 * You can improve text editor by adding accessibility features such as in popular text editors. (PyQt5)

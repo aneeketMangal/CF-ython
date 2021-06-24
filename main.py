@@ -33,7 +33,7 @@ class mainScreen(QMainWindow, UiComponents):
 
 
     def fileSave(self, filePath, obj):
-        print(filePath)
+        # print(filePath)
         return self.fileSaveToPath(filePath, obj)
   
     def fileSaveToPath(self, path, obj):
@@ -55,6 +55,7 @@ class mainScreen(QMainWindow, UiComponents):
         self.search_button.clicked.connect(lambda: self.loadCFProblems())
         # self.editorScreen.shortcut["Save"].activated.connect(lambda:self.fileSave())
         self.editorScreen.shortcut["Run"].activated.connect(lambda:self.compile())
+        self.editorScreen.shortcut["Save"].activated.connect(lambda:self.fileSave(self.currFilePath,self.editorScreen))
         self.problemView.itemClicked.connect(self.openCFProblem)
         self.problemView.itemDoubleClicked.connect(self.openSubmitWindow)
         self.loadCFProblems()

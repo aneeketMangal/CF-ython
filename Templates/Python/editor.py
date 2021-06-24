@@ -35,30 +35,61 @@ class CodeEditor(QPlainTextEdit, QThread):
         "Tab": QShortcut(QKeySequence('Ctrl+T'), self),
         "Copy": QShortcut(QKeySequence('Ctrl+Shift+P'), self),
         "Enter": QShortcut(QKeySequence('Alt+Up'), self),
-        "Comment": QShortcut(QKeySequence('ctrl+/'), self)
+        "Comment": QShortcut(QKeySequence('ctrl+/'), self),
+        "Bracket1":  QShortcut(QKeySequence('Shift+['), self),
+        "Bracket2":  QShortcut(QKeySequence('Shift+9'), self),
+        "Bracket3":  QShortcut(QKeySequence('['), self),
+        "Bracket4":  QShortcut(QKeySequence('"'), self)
          }
         self.shortcut["Copy"].activated.connect(self.copyGivenLine)
         self.shortcut["Comment"].activated.connect(self.comment)
+        self.shortcut["Bracket1"].activated.connect(self.bracket)
         # self.shortcut["Enter"].activated.connect(self.shiftLineUp)
         # self.returnPressed.activated.connect(self.checkTabSetting)
 
 
+    def bracket(self, br):
+        cur = self.textCursor()
+        if(br == "{"):
+            cur.insertText("{}")
+        elif(br == "["):
+            cur.insertText("[]")
+        elif(br == "'"):
+            cur.insertText("''")
+
+
 
     def comment(self):
-        c = self.textCursor().block()
-        c = c.text()
-        if(c.strip()[0] == "#"):
-            print("fdsa")
-            cur = self.textCursor()
-            cur.movePosition(QTextCursor.StartOfLine, QTextCursor.MoveAnchor)   
-            temp = list(c).index('#')
-            for i in range(temp):
-                cur.deleteChar()
-        else:
-            cur = self.textCursor()
-            cur.movePosition(QTextCursor.StartOfLine, QTextCursor.MoveAnchor)
-            cur.insertText('# ')
+        d = self.textCursor()
+        start = d.selectionStart()
+        end = d.selectionEnd()
+        d.setPosition(start)
+        g = d.blockNumber()
+        d.setPosition(end, QTextCursor.KeepAnchor)
+        g = d.blockNumber()-g
+        d.setPosition(start,  QTextCursor.MoveAnchor)
+        while(g>=0):
+            c = d.block().text()
+            if(len(c) == 0):
+                break
+            if(c.strip()[0] == "#"):
+                temp = c.find("#")
+                temp+=1
+                if(c[temp] == " "):
+                    temp+=1
+                cur = d
+                cur.movePosition(QTextCursor.StartOfLine, QTextCursor.MoveAnchor)   
+                # cur.close()
+                for i in range(temp):
+                    cur.deleteChar()
+            else:
+                cur = d
+                cur.movePosition(QTextCursor.StartOfLine, QTextCursor.MoveAnchor)
+                cur.insertText('# ')
+                # cur.close()
 
+            d.movePosition(QTextCursor.NextBlock, QTextCursor.KeepAnchor)   
+            g-=1
         # self.setTextCursor(cur)
         
 
@@ -95,6 +126,8 @@ class CodeEditor(QPlainTextEdit, QThread):
     def keyPressEvent(self, event):
         if event.key() in (Qt.Key_Return, Qt.Key_Enter):
             return self.checkTabSetting()
+        if event.key() in (Qt.Key_BraceLeft, Qt.Key_BracketLeft, Qt.Key_QuoteLeft):
+            return self.bracket(chr(event.key()))
 
         super().keyPressEvent(event)
 
